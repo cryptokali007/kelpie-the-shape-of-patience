@@ -1,0 +1,12 @@
+{
+  "hero": {
+    "enabled": true,
+    "path": "./assets/astra-hero.js"
+  },
+  "surfaceMaps": {
+    "enabled": true,
+    "height": "water-height.png",
+    "roughness": "water-roughness.png",
+    "caustic": "water-caustic.png"
+  }
+}

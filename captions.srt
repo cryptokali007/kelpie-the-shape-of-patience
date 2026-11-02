@@ -1,0 +1,79 @@
+1
+00:00:00,800 --> 00:00:11,450
+Markets keep moving, but your liquidity occupies a chosen place. Kelpie begins with that tension: a changing price, and the boundaries you decide to set around it.
+
+2
+00:00:15,800 --> 00:00:27,275
+Concentrated liquidity works within a selected price range. When price leaves those boundaries, the practical question is not simply where to move, but when movement is justified.
+
+3
+00:00:30,800 --> 00:00:42,425
+Kelpie is a concentrated-liquidity manager on Sui. You choose the pool, the range width, and the delay, establishing the parameters that shape how your position can be managed.
+
+4
+00:00:45,800 --> 00:00:58,400
+Supported venues include SuiDex V3 and Cetus, but the venue is fixed when the position opens. Management does not move that position between exchanges as conditions change.
+
+5
+00:01:00,800 --> 00:01:12,700
+Ownership stays with you; the keeper receives bounded management authority. The distinction matters: permission to carry out defined actions is not permission to take over your position.
+
+6
+00:01:15,800 --> 00:01:26,000
+Range width defines the span of prices you select. It is a practical parameter to examine, rather than a promise that your liquidity will remain in range.
+
+7
+00:01:30,800 --> 00:01:41,550
+Your chosen delay adds a condition of time. A price moving outside the range is not, by itself, permission for Kelpie to immediately move the position elsewhere.
+
+8
+00:01:45,800 --> 00:01:56,350
+If price returns before the delay has elapsed, that departure has not satisfied the waiting condition. The boundary is real, but crossing it is not enough alone.
+
+9
+00:02:00,800 --> 00:02:12,975
+Only an out-of-range condition that persists through your chosen delay permits this re-range. That is a threshold for bounded management, not a requirement to chase every market movement.
+
+10
+00:02:15,800 --> 00:02:27,425
+When permitted, the position can be re-ranged at the same width, single-sided, without a swap. The range changes location; its span is preserved, rather than widened to follow.
+
+11
+00:02:30,800 --> 00:02:43,525
+Single-sided means the re-range uses one side of the pool pair, without swapping between the assets. This is a constrained repositioning mechanism, not an unrestricted trading strategy.
+
+12
+00:02:45,800 --> 00:02:58,500
+These limits make the process understandable, not certain. Kelpie does not promise returns or keep price inside your range; market exposure remains part of providing concentrated liquidity.
+
+13
+00:03:00,800 --> 00:03:14,200
+Memory gives those parameter choices a past to examine. Kelpie records hourly pool observations, creating historical context for comparing settings instead of relying only on the present moment.
+
+14
+00:03:15,800 --> 00:03:28,300
+An observation is a record, not an instruction to act. Hourly memory supports historical comparison; it does not mean that positions must move, or that archives publish every hour.
+
+15
+00:03:30,800 --> 00:03:43,200
+At midnight, the daily records seal. That daily boundary turns accumulated observations into a closed record, separating the rhythm of collecting history from the rhythm of preserving it.
+
+16
+00:03:45,800 --> 00:03:57,200
+Those sealed daily records go onto Walrus within the week, not every hour. Keeping these schedules distinct helps you understand what the archive contains, and when it arrives.
+
+17
+00:04:00,800 --> 00:04:14,200
+Historical comparison lets you examine different widths and delays against past pool observations. It can inform a decision, but yesterday's behavior cannot establish what tomorrow's market will do.
+
+18
+00:04:15,800 --> 00:04:27,025
+Use Kelpie's guide and backtest to examine the mechanism before choosing parameters. Ask what each setting permits, how long it waits, and whether those limits fit your intentions.
+
+19
+00:04:30,800 --> 00:04:43,175
+The practical payoff is a clearer division of responsibility: you choose the boundaries, the keeper operates within them, and recorded history helps you compare choices without promising the future.
+
+20
+00:04:45,800 --> 00:04:58,650
+The Water Horse crosses from midnight into pale water, its amber thread still unbroken. Kelpie leaves you with a grounded starting point: choose deliberately, understand the rules, retain control.

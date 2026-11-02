@@ -1,0 +1,20 @@
+{
+  "name": "kelpiefeature2026",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "scripts": {
+    "preview": "node scripts/run.mjs preview --no-open",
+    "check": "node scripts/run.mjs check",
+    "render": "node scripts/run.mjs render --browser-gpu --gpu --strict --no-best-effort --output renders/film.mp4"
+  },
+  "dependencies": {
+    "@fontsource/cormorant-garamond": "5.3.0",
+    "@fontsource/manrope": "5.3.0",
+    "gsap": "3.15.0",
+    "hyperframes": "0.8.206",
+    "playwright": "1.64.1",
+    "three": "0.186.1"
+  }
+}

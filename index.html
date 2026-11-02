@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <title>Kelpie — The Shape of Patience</title>
+  <link rel="stylesheet" href="./film.css" />
+  <script src="./assets/vendor/gsap.min.js"></script>
+  <script type="importmap">{"imports":{"three":"./assets/vendor/three.module.js"}}</script>
+</head>
+<body>
+  <main data-hf-id="hf-4zv7" id="film" data-composition-id="main" data-start="0" data-duration="300" data-width="3840" data-height="2160" data-fps="60" aria-label="Kelpie cinematic film">
+    <canvas data-hf-id="hf-6rer" class="clip" data-start="0" data-duration="300" data-track-index="0" id="world" aria-hidden="true"></canvas>
+    <div data-hf-id="hf-qt31" class="shutter" id="shutter" aria-hidden="true"></div>
+    <div data-hf-id="hf-ub7q" class="grain" aria-hidden="true"></div>
+    <header data-hf-id="hf-kued" class="copy" aria-live="off">
+      <div data-hf-id="hf-49l2" class="eyebrow" id="eyebrow">KELPIE.NETWORK · FIELD NOTES</div>
+      <h1 data-hf-id="hf-0cgq" id="title">A living range</h1>
+      <p data-hf-id="hf-euq6" id="subtitle">Liquidity, held in motion.</p>
+      <div data-hf-id="hf-a46i" class="rule"></div>
+      <p data-hf-id="hf-kdb5" id="narration" class="narration"></p>
+    </header>
+    <footer data-hf-id="hf-vadb" class="footer"><span data-hf-id="hf-hngu" id="shot-label">FIELD NOTE 01</span><span data-hf-id="hf-0upk" class="wordmark">kelpie.network</span></footer>
+    <div data-hf-id="hf-g31u" class="caption" id="caption"></div>
+    <div data-hf-id="hf-nbvc" class="dev-badge" id="dev-badge">DEVELOPMENT FALLBACK STORY</div>
+  <audio data-hf-id="hf-weg7" id="finalMix" class="clip" data-start="0" data-duration="300" data-track-index="1" src="assets/final-mix.wav"></audio></main>
+  <script type="module">
+    import { createFilm } from './film.js';
+    const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+    const fallback={title:'A living range',shots:Array.from({length:20},(_,i)=>({index:i,start:i*15,end:(i+1)*15,title:['The water horse','A range is a promise','Where the current bends','Set the bounds','Bind the position','A quieter kind of care','The range breathes','Keep watch','Memory has a shape','What the water keeps','A record is a return','The archive opens','Measured movement','Two currents','The keeper’s view','The whole position','The range holds','A steady horizon','Many paths, one pool','A living range'][i],subtitle:'Kelpie.network · illustrative visualization',narration:'A position is not a number held still. It is a range, watched as the current moves.',mode:['water','range','range','range','bind','bind','range','range','memory','memory','archive','archive','compare','compare','water','range','range','memory','compare','finale'][i],mood:i===1||i===5?'daylight':i%3===0?'cobalt':'dark',camera:'forward drift',action:'The world changes with the position.'}))};
+    let story=fallback;
+    try { const r=await fetch('./assets/story.json',{cache:'no-store'}); if(r.ok){const s=await r.json(); if(Array.isArray(s.shots)&&s.shots.length)story=s;} } catch {}
+    document.getElementById('dev-badge').hidden=story!==fallback;
+    let envelopes=null;
+    try { const r=await fetch('./assets/motion_envelopes.json',{cache:'no-store'}); if(r.ok)envelopes=await r.json(); } catch {}
+    let manifest={};
+    try { const r=await fetch('./assets/film-manifest.json',{cache:'no-store'}); if(r.ok)manifest=await r.json(); } catch {}
+    const THREE=await import('three');
+    let heroFactory=null,surfaceMaps=null;
+    if(manifest.hero?.enabled===true&&manifest.hero.path==='./assets/astra-hero.js'){
+      const heroModule=await import('./assets/astra-hero.js');heroFactory=heroModule.createHero||heroModule.default||null;
+    }
+    if(manifest.surfaceMaps?.enabled===true){
+      const loader=new THREE.TextureLoader(),loadLocal=(path)=>new Promise(resolve=>loader.load(`./assets/${path}`,resolve,undefined,()=>resolve(null)));
+      const [height,roughness,caustic]=await Promise.all([loadLocal('water-height.png'),loadLocal('water-roughness.png'),loadLocal('water-caustic.png')]);
+      if(caustic)caustic.colorSpace=THREE.SRGBColorSpace;surfaceMaps={height,roughness,caustic};
+    }
+    const film=await createFilm({canvas:document.getElementById('world'),story,envelopes,THREE,gsap:window.gsap,heroFactory,surfaceMaps});
+    const root=document.documentElement;
+    window.__filmState=film.getState();
+    const segmentOffset=Number(root.dataset.timeOffset)||0;
+    window.__drawFilm=(seconds)=>{const t=clamp(Number(seconds)||0,0,300);film.draw(t);const s=film.getState();window.__filmState=s;const stage=document.getElementById('film');stage.classList.toggle('daylight',s.mood==='daylight'&&!['water','finale'].includes(s.mode));stage.classList.toggle('water-title',['water','finale'].includes(s.mode));document.getElementById('eyebrow').textContent=`KELPIE.NETWORK · ${String(s.sceneIndex+1).padStart(2,'0')} / 20`;
+      const shot=s.shot;document.getElementById('title').textContent=shot.title||story.title||'Kelpie';document.getElementById('subtitle').textContent=shot.subtitle||'';document.getElementById('narration').textContent=shot.on_screen_copy||'';document.getElementById('shot-label').textContent=`FIELD NOTE ${String(s.sceneIndex+1).padStart(2,'0')}`;document.getElementById('caption').textContent=shot.caption||'';document.getElementById('shutter').style.opacity=String(1-s.transition);for(const e of document.querySelectorAll('.copy,.footer,.caption'))e.style.opacity=String(s.transition);};
+    window.__timelines=window.__timelines||{};
+    const timeline=window.gsap?window.gsap.timeline({paused:true}):null;
+    if(timeline)timeline.to({}, {duration:300,onUpdate:()=>window.__drawFilm(segmentOffset+timeline.time())});
+    window.__timelines.main=timeline;
+    window.__drawFilm(segmentOffset);
+    window.__filmReady=true;
+  </script>
+</body>
+</html>

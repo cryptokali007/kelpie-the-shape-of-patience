@@ -1,0 +1,1 @@
+HyperFrames 0.8.206 package license: Apache-2.0. Official source: https://github.com/heygen-com/hyperframes . The full installed dependency versions are pinned in package-lock.json. Kokoro voice synthesis uses the already installed offline model; weights are not redistributed in this source archive.
